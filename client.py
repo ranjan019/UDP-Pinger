@@ -2,7 +2,7 @@
 
 import socket
 from socket import AF_INET, SOCK_DGRAM
-import time
+import time, datetime
 
 print 'The client is running...'
 print
@@ -14,13 +14,14 @@ clientSocket.settimeout(1)
 sequence_num_of_ping = 1 
 
 while sequence_num_of_ping<=10:
-    message = 'ping' 
+    current_time= datetime.datetime.now().time().isoformat()
+    message = 'Ping '+ str(sequence_num_of_ping) + ' ' +  str(current_time) 
     start_time=time.time() 
     clientSocket.sendto(message,(serverip, 12000))
     
     try:
-        message, address = clientSocket.recvfrom(1024) #recieves message from server
-        time_taken = (time.time()-start_time) 
+        message, address = clientSocket.recvfrom(1024) 
+        time_taken = ((time.time())-start_time) 
         print 
         print 'Ping number: '+ str(sequence_num_of_ping)
         print 'Message: ' + message
